@@ -1,0 +1,155 @@
+p{
+  margin: 0;
+}
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+/* Chat container as you had it */
+.chat-container {
+  max-width: 700px;
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.message-pair {
+  margin-bottom: 20px;
+}
+
+.message {
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 5px 0;
+  width: fit-content;
+  line-height: 1.5;
+}
+
+.message span{
+  font-weight: bold;
+  color: rgb(139, 137, 137);
+}
+
+.user-message {
+  background-color: #007bff;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+.bot-message {
+  background-color: #e9ecef;
+  color: #333;
+  margin-right: auto;
+}
+
+.input-area {
+  display: flex;
+
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.input-area button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.upload-btn {
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+
+}
+
+/* Lecture container next to chat */
+.lecture-container {
+  flex: 1 1 300px;
+  max-width: 500px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.lecture-container h4 {
+  margin: 0;
+  padding: 10px;
+  background-color: #eee;
+  border-bottom: 1px solid #ccc;
+}
+
+.lecture-container embed {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.typing-dots span {
+  display: inline-block;
+  animation: bounce 1.2s infinite;
+  font-weight: bold;
+  
+}
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(1); }
+    40% { transform: scale(1.5); }
+  }
+
+  .pdf-link {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    
+  }
+  
+
+  .pdf-link:hover {
+    color: #0056b3;
+  }

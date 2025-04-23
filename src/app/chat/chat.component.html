@@ -1,0 +1,54 @@
+<div class="main-container">
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div class="chat-box">
+            @for (msg of messages; track msg) {
+            <div class="message-pair">
+                <div class="message user-message">
+                    <span>You</span>
+                    <p>{{ msg.user }}</p>
+                </div>
+
+                <div class="message bot-message">
+                    <span>Bot</span>
+
+                    @if (msg.bot !== null) {
+                    @if (msg.bot.includes('/pdfs/') || msg.bot.includes('http')) {
+                    <p>
+                        <button (click)="openPdf(msg.bot)" class="pdf-link">
+                            Download PDF <i class="fa-solid fa-book"></i>
+                        </button>
+                    </p>
+                    } @else {
+                    <p>{{ msg.bot }}</p>
+                    }
+                    } @else {
+                    <span class="typing-dots">
+                        <span>.</span><span>.</span><span>.</span>
+                    </span>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="input-area">
+            <input [(ngModel)]="userInput" placeholder="Type your message..." (keyup.enter)="sendMessage()" />
+
+            <label class="upload-btn" title="Upload lecture PDF">
+                <i class="fa-solid fa-paperclip"></i>
+                <input type="file" accept=".pdf" (change)="onFileSelected($event)" hidden />
+            </label>
+
+            <button (click)="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Lecture PDF Preview -->
+    @if (pdfUrl) {
+    <div class="lecture-container">
+        <h4>📑 Uploaded Lecture: {{ lectureName || 'Untitled' }}</h4>
+        <embed [src]="pdfUrl" type="application/pdf" width="100%" height="100%" />
+    </div>
+    }
+</div>

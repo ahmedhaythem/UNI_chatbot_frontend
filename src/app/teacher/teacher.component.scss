@@ -1,0 +1,50 @@
+.teacher-container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .teacher-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-container label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .teacher-container input[type="text"],
+  .teacher-container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+  }
+  
+  .teacher-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .teacher-container button:hover {
+    background-color: #218838;
+  }
+  
+  .upload-msg {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
+  

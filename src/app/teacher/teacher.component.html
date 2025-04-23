@@ -1,0 +1,13 @@
+<div class="teacher-container">
+    <h2>👨‍🏫 Upload Lecture PDF</h2>
+
+    <label for="lectureName">Lecture Name:</label>
+    <input type="text" id="lectureName" [(ngModel)]="lectureName" placeholder="e.g. AI_Intro" />
+
+    <label for="fileInput">Select PDF:</label>
+    <input type="file" accept=".pdf" (change)="onFileSelected($event)" id="fileInput" />
+
+    <button (click)="uploadLecture()">Upload</button>
+
+    <p class="upload-msg">{{ uploadMessage }}</p>
+</div>
