@@ -1,6 +1,10 @@
 <div class="login-container">
-    <h2>Login</h2>
-
+    <div class="header">
+        <h2>Login</h2>
+        <div class="logo">
+            <img src="logo.png" alt="logo">
+        </div>
+    </div>
     <form (ngSubmit)="login()">
         <label for="role">Login as:</label>
         <select id="role" [(ngModel)]="role" name="role">

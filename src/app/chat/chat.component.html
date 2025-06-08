@@ -1,3 +1,6 @@
+<h1>Welcome
+    to
+    UNI_GUIDE_BOT </h1>
 <div class="main-container">
     <!-- Chat Container -->
     <div class="chat-container">
@@ -13,14 +16,14 @@
                     <span>Bot</span>
 
                     @if (msg.bot !== null) {
-                    @if (msg.bot.includes('/pdfs/') || msg.bot.includes('http')) {
+                    @if (msg.bot.includes('/pdfs/') || msg.bot.startsWith('http')) {
                     <p>
                         <button (click)="openPdf(msg.bot)" class="pdf-link">
                             Download PDF <i class="fa-solid fa-book"></i>
                         </button>
                     </p>
                     } @else {
-                    <p>{{ msg.bot }}</p>
+                    <p [innerHTML]="msg.bot" style="white-space: pre-wrap;"></p>
                     }
                     } @else {
                     <span class="typing-dots">
@@ -40,6 +43,9 @@
                 <input type="file" accept=".pdf" (change)="onFileSelected($event)" hidden />
             </label>
 
+            <label class="upload-btn" title="GPA Calculator" (click)="toggleGpaCalc()" [class.disabled]="pdfUrl">
+                <i class="fa-solid fa-calculator"></i>
+            </label>
             <button (click)="sendMessage()">Send</button>
         </div>
     </div>
@@ -47,8 +53,64 @@
     <!-- Lecture PDF Preview -->
     @if (pdfUrl) {
     <div class="lecture-container">
-        <h4>📑 Uploaded Lecture: {{ lectureName || 'Untitled' }}</h4>
+        <div class="lecture-header">
+            <h4>Uploaded Lecture: {{ lectureName || 'Untitled' }}</h4>
+            <button (click)="closePdf()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <embed [src]="pdfUrl" type="application/pdf" width="100%" height="100%" />
+    </div>
+    }
+
+    <!-- GPA Calculator Section -->
+    @if (showGpaCalc) {
+    <div class="gpa-container">
+        <div class="gpa-header">
+            <h4>GPA & CGPA Calculator</h4>
+            <button (click)="closeGpaCalc()" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="gpa-form">
+            <label>Current Semester Courses:</label>
+            @for (input of gpaInputs; track input) {
+            <div class="gpa-row">
+                <input [(ngModel)]="input.grade" placeholder="Grade (e.g. A, B+)" />
+                <input type="number" [(ngModel)]="input.credit" placeholder="Credit Hours" min="0" />
+                <label class="trash-btn" (click)="removeGpaRow(input)"><i class="fa-solid fa-trash"></i></label>
+            </div>
+            }
+
+            <button (click)="addGpaRow()"><i class="fa-solid fa-plus"></i> Add Course</button>
+
+            <hr />
+
+            <div class="prev-gpa">
+                <label>Finished Credit Hours:</label>
+                <input type="number" [(ngModel)]="finishedCredits" placeholder="e.g. 90" min="0" />
+
+                <label>Previous GPA:</label>
+                <input type="number" step="0.01" [(ngModel)]="previousGpa" placeholder="e.g. 3.2" min="0" />
+            </div>
+
+            <div class="gpa-actions">
+                <button (click)="calculateGpa()"><i class="fa-solid fa-check"></i> Calculate GPA & CGPA</button>
+            </div>
+
+
+            <div class="gpa-viewer">
+                @if (gpaResult !== null) {
+                <div class="gpa-result">
+                    GPA: <strong>{{ gpaResult }}</strong>
+                </div>
+                }
+
+                @if (cgpaResult !== null) {
+                <div class="gpa-result">
+                    CGPA: <strong>{{ cgpaResult }}</strong>
+                </div>
+                }
+            </div>
+
+        </div>
     </div>
     }
 </div>

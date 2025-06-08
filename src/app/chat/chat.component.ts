@@ -12,9 +12,18 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ChatComponent {
   userInput = '';
   messages: { user: string; bot: string | null }[] = [];
+
   pdfUrl: SafeResourceUrl | null = null;
   isUploading = false;
   lectureName: string | null = null;
+
+  // GPA & CGPA Calculator
+  showGpaCalc = false;
+  gpaInputs: { grade: string; credit: number }[] = [{ grade: '', credit: 0 }];
+  gpaResult: number | null = null;
+  cgpaResult: number | null = null;
+  finishedCredits = 0;
+  previousGpa = 0;
 
   constructor(private chatService: ChatService, private sanitizer: DomSanitizer) {}
 
@@ -47,6 +56,7 @@ export class ChatComponent {
       }
 
       this.lectureName = lectureName;
+      this.showGpaCalc = false; // Hide GPA calc when uploading
 
       const formData = new FormData();
       formData.append('file', selectedFile);
@@ -69,17 +79,99 @@ export class ChatComponent {
     }
   }
 
+  closePdf() {
+    this.pdfUrl = null;
+    this.lectureName = '';
+  }
+
   openPdf(message: string) {
-    // Use regex to extract `/pdfs/...` from the bot message
     const match = message.match(/\/pdfs\/[^\s]+/);
     if (!match) {
       alert('❌ No valid PDF link found in message.');
       return;
     }
-  
+
     const fullUrl = 'http://localhost:5000' + match[0];
     window.open(fullUrl, '_blank', 'noopener,noreferrer');
   }
 
-  
+  // ===== GPA & CGPA Calculator Logic =====
+
+  toggleGpaCalc() {
+    if (this.pdfUrl){
+      window.alert("Close Pdf first")
+      return; // Don't open if PDF is displayed
+    }  
+    this.showGpaCalc = !this.showGpaCalc;
+    this.gpaResult = null;
+    this.cgpaResult = null;
+  }
+
+  closeGpaCalc() {
+    this.showGpaCalc = false;
+    this.gpaResult = null;
+    this.cgpaResult = null;
+  }
+
+  addGpaRow() {
+    this.gpaInputs.push({ grade: '', credit: 0 });
+  }
+
+  removeGpaRow(input: { grade: string; credit: number }) {
+    this.gpaInputs = this.gpaInputs.filter(i => i !== input);
+  }
+
+  calculateGpa() {
+    let totalPoints = 0;
+    let totalCredits = 0;
+
+    for (const entry of this.gpaInputs) {
+      const grade = entry.grade.trim().toUpperCase();
+      const credit = entry.credit;
+
+      if (!grade || isNaN(credit) || credit <= 0) continue;
+
+      const points = this.getGradePoints(grade);
+      if (points === null) continue;
+
+      totalPoints += points * credit;
+      totalCredits += credit;
+    }
+
+    this.gpaResult = totalCredits > 0 ? parseFloat((totalPoints / totalCredits).toFixed(2)) : null;
+
+    // Calculate CGPA
+    const finished = this.finishedCredits;
+    const prevGpa = this.previousGpa;
+
+    if (!isNaN(finished) && finished > 0 && !isNaN(prevGpa) && this.gpaResult !== null) {
+      const prevPoints = prevGpa * finished;
+      const currentPoints = this.gpaResult * totalCredits;
+      const totalCumulativeCredits = finished + totalCredits;
+
+      this.cgpaResult = totalCumulativeCredits > 0
+        ? parseFloat(((prevPoints + currentPoints) / totalCumulativeCredits).toFixed(2))
+        : null;
+    } else {
+      this.cgpaResult = null;
+    }
+  }
+
+  getGradePoints(grade: string): number | null {
+    switch (grade) {
+      case 'A+': return 4.0;
+      case 'A': return 4.0;
+      case 'A-': return 3.7;
+      case 'B+': return 3.3;
+      case 'B': return 3.0;
+      case 'B-': return 2.7;
+      case 'C+': return 2.3;
+      case 'C': return 2.0;
+      case 'C-': return 1.7;
+      case 'D+': return 1.3;
+      case 'D': return 1.0;
+      case 'F': return 0.0;
+      default: return null;
+    }
+  }
 }

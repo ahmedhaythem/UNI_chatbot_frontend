@@ -10,6 +10,11 @@ p{
   flex-wrap: wrap;
 }
 
+h1{
+  color: white;
+  text-align: center;
+}
+
 /* Chat container as you had it */
 .chat-container {
   max-width: 700px;
@@ -117,6 +122,20 @@ p{
   border-bottom: 1px solid #ccc;
 }
 
+.lecture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #c00;
+}
+
 .lecture-container embed {
   flex: 1;
   width: 100%;
@@ -153,3 +172,128 @@ p{
   .pdf-link:hover {
     color: #0056b3;
   }
+
+
+.gpa-container {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  max-width: 425px;
+  box-sizing: border-box;
+}
+
+.gpa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gpa-form {
+  margin-top: 16px;
+}
+
+.gpa-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.trash-btn{
+  color: red;
+  cursor: pointer;
+}
+
+
+.gpa-form input {
+  padding: 4px 5px;
+  font-size: 0.9rem;
+  flex: 1 1 80px; /* inputs grow/shrink, min width ~80px */
+  max-width: 120px; /* cap max width */
+  min-width: 60px; /* prevent too small */
+  border-radius: 5px;
+  border:1px solid gray;
+  box-sizing: border-box;
+
+}
+
+.gpa-form button {
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 6px 12px;
+  border: 1px solid;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.gpa-form button .fa-check {
+  color: green;
+}
+
+.gpa-result {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.prev-gpa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap; 
+  margin-bottom: 15px;
+}
+
+.prev-gpa input {
+  flex: 0.5 0.5 20px;
+  max-width: 120px;
+  min-width: 40px;
+  box-sizing: border-box;
+}
+
+.gpa-viewer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* Smaller screens adjustments */
+@media (max-width: 480px) {
+  .gpa-container {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .gpa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .gpa-row {
+    gap: 8px;
+  }
+
+  .gpa-form input,
+  .prev-gpa input {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .gpa-form button {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 8px;
+  }
+
+  .gpa-result {
+    font-size: 1rem;
+    
+  }
+}
