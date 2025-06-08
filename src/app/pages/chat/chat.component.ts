@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChatService } from '../chat.service';
+import { ChatService } from '../../core/services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
